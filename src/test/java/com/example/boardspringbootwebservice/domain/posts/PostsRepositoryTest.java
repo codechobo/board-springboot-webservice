@@ -1,11 +1,10 @@
 package com.example.boardspringbootwebservice.domain.posts;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +16,11 @@ class PostsRepositoryTest {
 
     @Autowired
     PostsRepository postsRepository; // bean 주입을 받아 사용 합니다.
+
+    @BeforeEach
+    public void before() {
+        postsRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("Repository_TEST")
