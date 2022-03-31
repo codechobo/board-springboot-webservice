@@ -1,10 +1,9 @@
 package com.example.boardspringbootwebservice.web;
 
-import com.example.boardspringbootwebservice.domain.posts.Posts;
 import com.example.boardspringbootwebservice.service.posts.PostsService;
 import com.example.boardspringbootwebservice.web.dto.PostsResponseDto;
 import com.example.boardspringbootwebservice.web.dto.PostsSaveRequestDto;
-import lombok.Getter;
+import com.example.boardspringbootwebservice.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +16,11 @@ public class PostsApiController {
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
+    }
+
+    @PutMapping("/api/v1/posts/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {
+         return postsService.update(id, requestDto);
     }
 
     @GetMapping("/api/v1/posts/{id}")
