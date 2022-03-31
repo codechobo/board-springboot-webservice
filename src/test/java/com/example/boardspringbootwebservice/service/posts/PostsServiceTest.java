@@ -3,6 +3,7 @@ package com.example.boardspringbootwebservice.service.posts;
 import com.example.boardspringbootwebservice.domain.posts.PostsRepository;
 import com.example.boardspringbootwebservice.web.dto.PostsResponseDto;
 import com.example.boardspringbootwebservice.web.dto.PostsSaveRequestDto;
+import com.example.boardspringbootwebservice.web.dto.PostsUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -73,5 +74,30 @@ class PostsServiceTest {
         assertThat(responseDto.getTitle()).isEqualTo(expectTitle);
         assertThat(responseDto.getContent()).isEqualTo(expectContent);
         assertThat(responseDto.getAuthor()).isEqualTo(expectAuthor);
+    }
+
+    @Test
+    @DisplayName("Update_된다")
+    void update() {
+        // given
+        Long findId = 1L;
+
+        String expectedTitle = "테스트 수정";
+        String expectedContent = "테스트 중 입니다. 수정";
+
+        PostsUpdateRequestDto updateRequestDto = PostsUpdateRequestDto.builder()
+                .title(expectedTitle)
+                .content(expectedContent)
+                .build();
+
+        // when
+        postsService.update(findId, updateRequestDto);
+
+        // then
+        PostsResponseDto updatePosts = postsService.findById(1L);
+
+        assertThat(updatePosts.getTitle()).isEqualTo(expectedTitle);
+        assertThat(updatePosts.getContent()).isEqualTo(expectedContent);
+
     }
 }
