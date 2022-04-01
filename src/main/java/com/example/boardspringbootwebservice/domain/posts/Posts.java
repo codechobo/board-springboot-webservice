@@ -1,5 +1,6 @@
 package com.example.boardspringbootwebservice.domain.posts;
 
+import com.example.boardspringbootwebservice.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter // getter() 를 생성해 줍니다.
 @NoArgsConstructor // 기본 생성자를 생성해 줍니다.
 @Entity // 관계형 테이블과 링크될 클래스임을 정의합니다.
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id // 엔티티의 PK를 설정해줍니다.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성 규칙을 설정 힙니다. 자동으로 id 값이 올라갑니다.

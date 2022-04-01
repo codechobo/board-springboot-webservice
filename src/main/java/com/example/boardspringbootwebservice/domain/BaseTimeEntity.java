@@ -10,13 +10,13 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @Getter
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass // 해당 엔티티를 상속한 엔티티의 속성 값도 엔티티에 적용
+@EntityListeners(AuditingEntityListener.class) // Auditing 기능을 적용
 public class BaseTimeEntity {
 
-    @CreatedDate
+    @CreatedDate // 엔티티가 생성되어 저장될 때 시간이 자동 저장
     private LocalDateTime createdTime;
 
-    @LastModifiedDate
+    @LastModifiedDate // 조회한 엔티티의 값을 변경할 때 시간이 자동 저장
     private LocalDateTime modifiedTime;
 }
