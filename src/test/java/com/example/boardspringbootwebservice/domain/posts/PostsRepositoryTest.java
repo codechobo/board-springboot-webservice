@@ -1,13 +1,13 @@
 package com.example.boardspringbootwebservice.domain.posts;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +17,7 @@ class PostsRepositoryTest {
     @Autowired
     PostsRepository postsRepository; // bean 주입을 받아 사용 합니다.
 
-    @BeforeEach
+    @AfterEach
     public void before() {
         postsRepository.deleteAll();
     }
@@ -45,6 +45,28 @@ class PostsRepositoryTest {
         assertThat(postsRepositoryAll.get(0).getTitle()).isEqualTo(title);
         assertThat(postsRepositoryAll.get(0).getContent()).isEqualTo(content);
         assertThat(postsRepositoryAll.get(0).getAuthor()).isEqualTo(author);
+    }
+
+    @Test
+    @DisplayName("Base_Entity_TEST")
+    void Base_Entity_TEST() {
+        // given
+        LocalDateTime now = LocalDateTime
+                .of(2022, 4, 1, 0, 0, 0);
+
+        postsRepository.save(Posts.builder()
+                .title("테스트")
+                .content("테스트 중 입니다.")
+                .author("홍길동")
+                .build()
+        );
+
+        // when
+        List<Posts> all = postsRepository.findAll();
+
+        // then
+        assertThat(all.get(0).getCreatedTime()).isAfter(now);
+        assertThat(all.get(0).getModifiedTime()).isAfter(now);
     }
 
 }
