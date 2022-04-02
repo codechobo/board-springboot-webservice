@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @Getter
 public class PostsListResponseDto {
 
-    private Long id;
-    private String title;
-    private String author;
-    private LocalDateTime modifiedTime;
+    private final Long id;
+    private final String title;
+    private final String author;
+    private final LocalDateTime modifiedTime;
 
     @Builder
     public PostsListResponseDto(Posts entity) {

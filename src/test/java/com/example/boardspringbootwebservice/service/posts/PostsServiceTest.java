@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 class PostsServiceTest {
@@ -120,5 +121,19 @@ class PostsServiceTest {
         assertThat(responseDtos.size()).isEqualTo(2);
         assertThat(responseDtos.get(0).getTitle()).isEqualTo("테스트2");
         assertThat(responseDtos.get(1).getTitle()).isEqualTo("테스트1");
+    }
+
+    @Test
+    void 삭제된다() {
+        // given
+        Long id = 1L;
+
+        // when
+        postsService.delete(id);
+
+        // then
+        assertThatThrownBy(() -> postsService.findById(id))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하는 게시글이 없습니다. id = " + id);
     }
 }

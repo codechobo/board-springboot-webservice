@@ -44,8 +44,14 @@ public class PostsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public void delete(Long id) {
+        Posts entity = getEntity(id);
+        postsRepository.delete(entity);
+    }
+
     private Posts getEntity(Long id) {
         return postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하는 게시글이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하는 게시글이 없습니다. id = " + id));
     }
 }
