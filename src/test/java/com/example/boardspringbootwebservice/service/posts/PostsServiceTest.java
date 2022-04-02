@@ -120,6 +120,5 @@ class PostsServiceTest {
         assertThat(responseDtos.size()).isEqualTo(2);
         assertThat(responseDtos.get(0).getTitle()).isEqualTo("테스트2");
         assertThat(responseDtos.get(1).getTitle()).isEqualTo("테스트1");
-
     }
 }
