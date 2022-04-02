@@ -1,6 +1,7 @@
 package com.example.boardspringbootwebservice.service.posts;
 
 import com.example.boardspringbootwebservice.domain.posts.PostsRepository;
+import com.example.boardspringbootwebservice.web.dto.PostsListResponseDto;
 import com.example.boardspringbootwebservice.web.dto.PostsResponseDto;
 import com.example.boardspringbootwebservice.web.dto.PostsSaveRequestDto;
 import com.example.boardspringbootwebservice.web.dto.PostsUpdateRequestDto;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,13 +27,20 @@ class PostsServiceTest {
 
     @BeforeEach
     public void beforeEach() {
-        PostsSaveRequestDto dto = PostsSaveRequestDto.builder()
+        PostsSaveRequestDto dto1 = PostsSaveRequestDto.builder()
                 .title("테스트1")
                 .content("테스트 중 입니다.1")
                 .author("홍길동1")
                 .build();
 
-        postsService.save(dto);
+        PostsSaveRequestDto dto2 = PostsSaveRequestDto.builder()
+                .title("테스트2")
+                .content("테스트 중 입니다.2")
+                .author("홍길동2")
+                .build();
+
+        postsService.save(dto1);
+        postsService.save(dto2);
     }
 
     @AfterEach
@@ -98,6 +108,18 @@ class PostsServiceTest {
 
         assertThat(updatePosts.getTitle()).isEqualTo(expectedTitle);
         assertThat(updatePosts.getContent()).isEqualTo(expectedContent);
+    }
+
+    @Test
+    void findAllDesc() {
+        // given && when
+        List<PostsListResponseDto> responseDtos = postsService.findAllDesc();
+
+        // then
+        assertThat(responseDtos.isEmpty()).isFalse();
+        assertThat(responseDtos.size()).isEqualTo(2);
+        assertThat(responseDtos.get(0).getTitle()).isEqualTo("테스트2");
+        assertThat(responseDtos.get(1).getTitle()).isEqualTo("테스트1");
 
     }
 }
